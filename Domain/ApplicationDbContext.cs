@@ -11,7 +11,7 @@ namespace CompanyPortfolioo.Domain
         public DbSet<Service> Services { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<AboutUs> AboutUs { get; set; }
-        public DbSet<ProjectDetail> ProjectDetails { get; set; }
+        public DbSet<ProjectDetails> ProjectDetails { get; set; }
         public DbSet<ProjectCategory> ProjectCategories { get; set; }
         public DbSet<HorizontalSlider> HorizontalSliders { get; set; }
         public DbSet<AskedQuestion> AskedQuestions { get; set; }
@@ -30,12 +30,12 @@ namespace CompanyPortfolioo.Domain
             // Configure entity relationships and constraints
 
 
-            modelBuilder.Entity<ProjectDetail>()
+            modelBuilder.Entity<ProjectDetails>()
                 .HasOne(pd => pd.Testimonial)
                 .WithMany()
                 .HasForeignKey(pd => pd.TestimonialId);
 
-            modelBuilder.Entity<ProjectDetail>()
+            modelBuilder.Entity<ProjectDetails>()
                 .HasOne(pd => pd.Project)
                 .WithMany()
                 .HasForeignKey(pd => pd.ProjectId);

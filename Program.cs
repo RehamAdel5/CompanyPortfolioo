@@ -1,5 +1,7 @@
 using CompanyPortfolioo.Domain;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileSystemGlobbing.Internal.Patterns;
+using System.Formats.Tar;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,10 +27,14 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+
 app.UseAuthorization();
 
 app.MapStaticAssets();
 app.MapRazorPages()
    .WithStaticAssets();
-
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=index}/{id?}"
+    );
 app.Run();

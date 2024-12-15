@@ -2,7 +2,7 @@
 
 namespace CompanyPortfolioo.Domain
 {
-    public class ProjectDetail
+    public class ProjectDetails
     {
         public int Id { get; set; }
         public DateTime StartDate { get; set; }
