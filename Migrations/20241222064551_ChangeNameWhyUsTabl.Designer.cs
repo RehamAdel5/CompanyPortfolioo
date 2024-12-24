@@ -4,6 +4,7 @@ using CompanyPortfolioo.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CompanyPortfolioo.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241222064551_ChangeNameWhyUsTabl")]
+    partial class ChangeNameWhyUsTabl
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,27 +44,6 @@ namespace CompanyPortfolioo.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AboutUs");
-                });
-
-            modelBuilder.Entity("CompanyPortfolioo.Domain.AskedQuestion", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Answer")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Question")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AskedQuestions");
                 });
 
             modelBuilder.Entity("CompanyPortfolioo.Domain.CompanyInformation", b =>
@@ -140,31 +122,6 @@ namespace CompanyPortfolioo.Migrations
                     b.ToTable("ContactUs");
                 });
 
-            modelBuilder.Entity("CompanyPortfolioo.Domain.Features", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("IsActiveFeature")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("PricingId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PricingId");
-
-                    b.ToTable("Features");
-                });
-
             modelBuilder.Entity("CompanyPortfolioo.Domain.HorizontalSlider", b =>
                 {
                     b.Property<int>("Id")
@@ -207,8 +164,9 @@ namespace CompanyPortfolioo.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
+                    b.Property<string>("Features")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PlanName")
                         .IsRequired()
@@ -261,10 +219,6 @@ namespace CompanyPortfolioo.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImagePath")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -421,10 +375,6 @@ namespace CompanyPortfolioo.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImagePath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("InstagramUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -507,17 +457,6 @@ namespace CompanyPortfolioo.Migrations
                     b.ToTable("WhyUs");
                 });
 
-            modelBuilder.Entity("CompanyPortfolioo.Domain.Features", b =>
-                {
-                    b.HasOne("CompanyPortfolioo.Domain.Pricing", "Pricing")
-                        .WithMany("Features")
-                        .HasForeignKey("PricingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Pricing");
-                });
-
             modelBuilder.Entity("CompanyPortfolioo.Domain.Project", b =>
                 {
                     b.HasOne("CompanyPortfolioo.Domain.ProjectCategory", "ProjectCategory")
@@ -557,11 +496,6 @@ namespace CompanyPortfolioo.Migrations
                         .IsRequired();
 
                     b.Navigation("Project");
-                });
-
-            modelBuilder.Entity("CompanyPortfolioo.Domain.Pricing", b =>
-                {
-                    b.Navigation("Features");
                 });
 
             modelBuilder.Entity("CompanyPortfolioo.Domain.ProjectCategory", b =>

@@ -24,6 +24,8 @@ namespace CompanyPortfolioo.Domain
         public DbSet<Testimonial> Testimonials { get; set; }
         public DbSet<Request> Requests { get; set; }
         public DbSet<CompanyInformation> CompanyInformation { get; set; }
+        public DbSet<WhyUs> WhyUs { get; set; }
+        public DbSet<Features> Features { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

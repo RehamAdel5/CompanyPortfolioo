@@ -1,4 +1,6 @@
-﻿@{
+﻿@using CompanyPortfolioo.ViewModels;
+@model IndexViewModel
+@{
     ViewBag.Title = "Index";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
@@ -7,19 +9,19 @@
     @Html.Partial("_CompanyInformation")
 </section>
 <section id="clients" class="clients section light-background">
-    @Html.Partial("_Clients")
+    @Html.Partial("_Clients", Model.HorizontalSliderList)
 </section>
 <section id="about" class="about section">
-    @Html.Partial("_About")
+    @Html.Partial("_About",Model.AboutList)
 </section>
 <section id="why-us" class="section why-us light-background" data-builder="section">
-    @Html.Partial("_WhyUs")
+    @Html.Partial("_WhyUs",Model.WhyUsList)
 </section>
 <section id="skills" class="skills section">
-    @Html.Partial("_Skills")
+    @Html.Partial("_Skills",Model.SkillsList)
 </section>
 <section id="services" class="services section light-background">
-    @Html.Partial("_Services")
+    @Html.Partial("_Services", Model.ServicesList)
 </section>
 <section id="call-to-action" class="call-to-action section dark-background">
     @Html.Partial("_CallToAction")
@@ -27,21 +29,20 @@
 
 
 <section id="portfolio" class="portfolio section">
-    @Html.Partial("_Portfolio")
+    @Html.Partial("_Portfolio",Model.ProjectList)
 </section>
-
 <section id="team" class="team section">
-    @Html.Partial("_Team")
+    @Html.Partial("_Team", Model.TeamList)
 </section>
 <section id="pricing" class="pricing section light-background">
-    @Html.Partial("_Pricing")
+    @Html.Partial("_Pricing", Model.FeaturesList)
 </section>
 <section id="testimonials" class="testimonials section">
-    @Html.Partial("_Testimonials")
+    @Html.Partial("_Testimonials", Model.TestimonialList)
 </section>
 <section id="faq-2" class="faq-2 section light-background">
-    @Html.Partial("_AskedQuestion")
+    @Html.Partial("_AskedQuestion", Model.AskedQuestionList)
 </section>
 <section id="contact" class="contact section">
-    @Html.Partial("_ContactUs")
+    @Html.Partial("_ContactUs", Model.ContactUsList)
 </section>

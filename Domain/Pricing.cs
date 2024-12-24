@@ -5,7 +5,8 @@
         public int Id { get; set; }
         public string PlanName { get; set; }
         public double Price { get; set; }
-        public string Features { get; set; }
+        public bool IsActive { get; set; }
+        public ICollection<Features> Features { get; set; }
 
     }
 }
