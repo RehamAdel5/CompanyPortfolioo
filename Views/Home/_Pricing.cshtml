@@ -26,7 +26,14 @@
                         {
                             if (MainItem.PriceId == item.PriceId)
                             {
-                                <li><i class="bi bi-check"></i> <span>@item.Title</span></li>
+                                if (item.IsActiveFeature)
+                                {
+                                    <li><i class="bi bi-check"></i> <span>@item.Title</span></li>
+                                }
+                                else
+                                {
+                                    <li class="na"><i class="bi bi-x"></i> <span>@item.Title</span></li>
+                                }
                             }
                         }
                     </ul>
