@@ -13,7 +13,17 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddScoped<IHomeService, HomeService>();
+builder.Services.AddScoped<IServicesRepository, ServicesRepository>(); 
+builder.Services.AddScoped<IHorizontalSliderRepository, HorizontalSliderRepository>(); 
+builder.Services.AddScoped<IAboutRepository, AboutRepository>();
+builder.Services.AddScoped<IWhyUsRepository, WhyUsRepository>();
+builder.Services.AddScoped<ISkillsRepository, SkillsRepository>();
+builder.Services.AddScoped<IProjectsRepository, ProjectsRepository>(); 
+builder.Services.AddScoped<ITeamRepository, TeamRepository>();
+builder.Services.AddScoped<IFeaturesRepository, FeaturesRepository>(); 
+builder.Services.AddScoped<ITestimonialRepository, TestimonialRepository>(); 
+builder.Services.AddScoped<IAskedQuestionRepository, AskedQuestionRepository>();
+builder.Services.AddScoped<IContactUsRepository, ContactUsRepository>();
 builder.Services.AddScoped<IProjectCategoryService, ProjectCategoryService>();
 builder.Services.AddScoped<IProjectDetailsService, ProjectDetailsService>();
 

@@ -1,6 +1,7 @@
 ﻿using CompanyPortfolioo.Interfaces;
 using CompanyPortfolioo.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CompanyPortfolioo.Controllers
 {
@@ -11,10 +12,15 @@ namespace CompanyPortfolioo.Controllers
         {
             _projectDetailsService = projectDetailsService;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int id)
         {
-            var projectDetailsList = await _projectDetailsService.GetProjectDetailsAsync();
-            return View(projectDetailsList);
+            var (projectDetails, projectImages) = await _projectDetailsService.GetProjectDetailsAndImagesAsync(id); 
+            if (projectDetails == null)
+            {
+                return View("NotFound");
+            }
+            ViewBag.ProjectImages = projectImages;
+            return View(projectDetails);
         }
     }
 }

@@ -4,6 +4,7 @@ namespace CompanyPortfolioo.Interfaces
 {
     public interface IProjectDetailsService
     {
-        Task<List<ProjectDetails>> GetProjectDetailsAsync();
+        Task<(ProjectDetails, List<ProjectImage>)> GetProjectDetailsAndImagesAsync(int id);
+
     }
 }

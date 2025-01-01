@@ -12,5 +12,6 @@ namespace CompanyPortfolioo.Domain
         [ForeignKey("ProjectCategory")]
         public int ProjectCategoryId { get; set; }
         public ProjectCategory ProjectCategory { get; set; }
+        public ICollection<ProjectImage> Images { get; set; }
     }
 }

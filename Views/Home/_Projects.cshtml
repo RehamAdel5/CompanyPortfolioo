@@ -1,6 +1,9 @@
 ﻿@using CompanyPortfolioo.ViewModels;
 @model List<ProjectViewModel>
 @{
+    var projectCategories = ViewBag.ProjectCategories; // as List<ProjectViewModel>;
+}
+@{
     Layout = null;
 }
 
@@ -17,10 +20,12 @@
 
         <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
             <li data-filter="*" class="filter-active">All</li>
-
-            @foreach (var item in ViewBag.ProjectCategories)
+            @if (projectCategories != null)
             {
-                <li data-filter=".@item.ProjectCategoryId">@item.ProjectCategoryName</li>
+                @foreach (var item in projectCategories)
+                {
+                    <li data-filter=".@item.ProjectCategoryId">@item.ProjectCategoryName</li>
+                }
             }
         </ul><!-- End Portfolio Filters -->
 

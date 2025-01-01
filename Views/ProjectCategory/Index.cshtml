@@ -55,7 +55,7 @@
                             @if (counter == 0)
                             {
                                 <div class="col-lg-8 isotope-item @item.Id" data-aos="fade-up">
-                                    <img src="@item.ImagePath" alt="" class="img-fluid services-img">
+                                    <img src="~/@item.ImagePath" alt="" class="img-fluid services-img">
                                     <h3>@item.Name</h3>
                                     <p>
                                         @item.Description
@@ -65,7 +65,7 @@
                             else
                             {
                                 <div class="col-lg-8 isotope-item @item.Id" data-aos="fade-up">
-                                    <img src="@item.ImagePath" alt="" class="img-fluid services-img">
+                                    <img src="~/@item.ImagePath" alt="" class="img-fluid services-img">
                                     <h3>@item.Name</h3>
                                     <p>
                                         @item.Description

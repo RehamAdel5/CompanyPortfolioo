@@ -1,6 +1,6 @@
 ﻿namespace CompanyPortfolioo.ViewModels
 {
-    public class AskedQuestionViewModel
+    public class AskedQuestionsViewModel
     {
         public string Question { get; set; }
         public string Answer { get; set; }

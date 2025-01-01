@@ -12,27 +12,46 @@ namespace HomeController.Controllers
 {
     public class HomeController : Controller
     {
-        
-    private readonly IHomeService _homeService;
-
-        public HomeController(IHomeService homeService)
+        private readonly IServicesRepository _servicesRepository;
+        private readonly IHorizontalSliderRepository _horizontalSliderRepository;
+        private readonly IAboutRepository _aboutRepository;
+        private readonly IWhyUsRepository _whyUsRepository;
+        private readonly ISkillsRepository _skillsRepository;
+        private readonly IProjectsRepository _projectsRepository;
+        private readonly ITeamRepository _teamRepository;
+        private readonly IFeaturesRepository _featuresRepository;
+        private readonly ITestimonialRepository _testimonialRepository;
+        private readonly IAskedQuestionRepository _askedQuestionRepository;
+        private readonly IContactUsRepository _contactUsRepository;
+        public HomeController(IServicesRepository servicesRepository, IHorizontalSliderRepository horizontalSliderRepository, IAboutRepository aboutRepository, IWhyUsRepository whyUsRepository, ISkillsRepository skillsRepository, IProjectsRepository projectsRepository, ITeamRepository teamRepository, IFeaturesRepository featuresRepository, ITestimonialRepository testimonialRepository, IAskedQuestionRepository askedQuestionRepository, IContactUsRepository contactUsRepository)
         {
-            _homeService = homeService;
+            _servicesRepository = servicesRepository;
+            _horizontalSliderRepository = horizontalSliderRepository;
+            _aboutRepository = aboutRepository;
+            _whyUsRepository = whyUsRepository;
+            _skillsRepository = skillsRepository;
+            _projectsRepository = projectsRepository;
+            _teamRepository = teamRepository;
+            _featuresRepository = featuresRepository;
+            _testimonialRepository = testimonialRepository;
+            _askedQuestionRepository = askedQuestionRepository;
+            _contactUsRepository = contactUsRepository;
         }
+        // Return partial views for each method
 
         public async Task<IActionResult> Index()
         {
-            var services = await _homeService.GetServicesAsync();
-            var slider = await _homeService.GetHorizontalSliderAsync();
-            var about = await _homeService.GetAboutAsync();
-            var whyUs = await _homeService.GetWhyUsAsync();
-            var skills = await _homeService.GetSkillsAsync();
-            var projects = await _homeService.GetProjectsAsync();
-            var team = await _homeService.GetTeamAsync();
-            var featuresList = await _homeService.GetFeaturesAsync();
-            var testimonial = await _homeService.GetTestimonialAsync();
-            var askedQuestion = await _homeService.GetAskedQuestionAsync();
-            var contactUs = await _homeService.GetContactUsAsync();
+            var services = await _servicesRepository.GetServicesAsync();
+            var slider = await _horizontalSliderRepository.GetHorizontalSliderAsync();
+            var about = await _aboutRepository.GetAboutAsync();
+            var whyUs = await _whyUsRepository.GetWhyUsAsync();
+            var skills = await _skillsRepository.GetSkillsAsync();
+            var projects = await _projectsRepository.GetProjectsAsync();
+            var team = await _teamRepository.GetTeamAsync();
+            var featuresList = await _featuresRepository.GetFeaturesAsync();
+            var testimonial = await _testimonialRepository.GetTestimonialAsync();
+            var askedQuestion = await _askedQuestionRepository.GetAskedQuestionAsync();
+            var contactUs = await _contactUsRepository.GetContactUsAsync();
 
             var viewModel = new IndexViewModel
             {
@@ -46,98 +65,86 @@ namespace HomeController.Controllers
                 FeaturesList = featuresList,
                 TestimonialList = testimonial,
                 AskedQuestionList = askedQuestion,
-                ContactUsList = contactUs
+                ContactUs = contactUs
             };
-
-            ViewBag.ProjectCategories = projects
-                .Select(p => new { p.ProjectCategoryId, p.ProjectCategoryName })
-                .Distinct().ToList();
-
-            ViewBag.PricingList = featuresList
-                .Select(p => new { p.PlanName, p.Price, p.PriceId })
-                .Distinct().ToList();
-
+             projects = await _projectsRepository.GetProjectsAsync();
+            ViewBag.ProjectCategories = projects.Select(p => new
+            {
+                p.ProjectCategoryId,
+                p.ProjectCategoryName
+            }).Distinct().ToList();
+             featuresList = await _featuresRepository.GetFeaturesAsync();
+            ViewBag.PricingList = featuresList.Select(p => new
+            {
+                p.PlanName,
+                p.Price,
+                p.PriceId
+            }).Distinct().ToList();
             return View(viewModel);
         }
-
-      
-
-        public async Task<IActionResult> Clients()
+        public async Task<PartialViewResult> GetHorizontalSliders()
         {
-            var sliderItems = await _homeService.GetHorizontalSliderAsync();
-            return PartialView("_Clients", sliderItems);
+            var sliders = await _horizontalSliderRepository.GetHorizontalSliderAsync();
+            return PartialView("_HorizontalSlider", sliders);
         }
-
-        public async Task<IActionResult> About()
+        public async Task<PartialViewResult> GetAbout()
         {
-            var about = await _homeService.GetAboutAsync();
+            var about = await _aboutRepository.GetAboutAsync();
             return PartialView("_About", about);
         }
-
-        public async Task<IActionResult> WhyUs()
+        public async Task<PartialViewResult> GetWhyUs()
         {
-            var whyUs = await _homeService.GetWhyUsAsync();
+            var whyUs = await _whyUsRepository.GetWhyUsAsync();
             return PartialView("_WhyUs", whyUs);
         }
-
-        public async Task<IActionResult> Skills()
+        public async Task<PartialViewResult> GetSkills()
         {
-            var skills = await _homeService.GetSkillsAsync();
+            var skills = await _skillsRepository.GetSkillsAsync();
             return PartialView("_Skills", skills);
         }
-
-        public async Task<IActionResult> Services()
+        public async Task<PartialViewResult> GetServices()
         {
-            var services = await _homeService.GetServicesAsync();
+            var services = await _servicesRepository.GetServicesAsync();
             return PartialView("_Services", services);
         }
 
-        public IActionResult CallToAction()
+        public async Task<PartialViewResult> GetProjects()
         {
-            return PartialView("_CallToAction");
+            var projects = await _projectsRepository.GetProjectsAsync();
+            return PartialView("_Projects", projects);
         }
-
-        public async Task<IActionResult> Portfolio()
+        public async Task<PartialViewResult> GetTeam()
         {
-            var projects = await _homeService.GetProjectsAsync();
-            return PartialView("_Portfolio", projects);
+            var teams = await _teamRepository.GetTeamAsync();
+            return PartialView("_Team", teams);
         }
-
-        public async Task<IActionResult> Team()
+        public async Task<PartialViewResult> GetFeatures()
         {
-            var teamList = await _homeService.GetTeamAsync();
-            return PartialView("_Team", teamList);
+            var features = await _featuresRepository.GetFeaturesAsync();
+            return PartialView("_Pricing", features);
         }
-
-        public async Task<IActionResult> Pricing()
+        public async Task<PartialViewResult> GetTestimonials()
         {
-            var featuresList = await _homeService.GetFeaturesAsync();
-            return PartialView("_Pricing", featuresList);
+            var testimonials = await _testimonialRepository.GetTestimonialAsync();
+            return PartialView("_Testimonials", testimonials);
         }
-
-        public async Task<IActionResult> Testimonials()
+        public async Task<PartialViewResult> GetAskedQuestions()
         {
-            var testimonialList = await _homeService.GetTestimonialAsync();
-            return PartialView("_Testimonials", testimonialList);
+            var askedQuestions = await _askedQuestionRepository.GetAskedQuestionAsync();
+            return PartialView("_AskedQuestions", askedQuestions);
         }
-
-        public async Task<IActionResult> AskedQuestion()
+        public async Task<PartialViewResult> GetContactUs()
         {
-            var question = await _homeService.GetAskedQuestionAsync();
-            return PartialView("_AskedQuestion", question);
-        }
+            var contactUs = await _contactUsRepository.GetContactUsAsync();
 
-        public async Task<IActionResult> ContactUs()
-        {
-            var contactUs = await _homeService.GetContactUsAsync();
             return PartialView("_ContactUs", contactUs);
         }
     }
-  
-    }
-    
+}
 
 
 
 
-   
+
+
+
