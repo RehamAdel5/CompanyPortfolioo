@@ -1,6 +1,7 @@
 using CompanyPortfolioo.Domain;
 using CompanyPortfolioo.Interfaces;
 using CompanyPortfolioo.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileSystemGlobbing.Internal.Patterns;
 using System.Formats.Tar;
@@ -12,6 +13,26 @@ builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+//builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+//    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders();
+
+builder.Services.AddAuthorization(options => {
+    options.AddPolicy("RequireAdminRole",
+    policy => policy.RequireRole("Admin"));
+});
+
+
+//builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+//builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+//    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+
 
 builder.Services.AddScoped<IServicesRepository, ServicesRepository>(); 
 builder.Services.AddScoped<IHorizontalSliderRepository, HorizontalSliderRepository>(); 
@@ -44,7 +65,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();
@@ -52,6 +73,6 @@ app.MapRazorPages()
    .WithStaticAssets();
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=index}/{id?}"
+    pattern: "{controller=DashBoard}/{action=index}/{id?}"
     );
 app.Run();

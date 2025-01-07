@@ -1,11 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace CompanyPortfolioo.Domain
 {
-    public class ApplicationDbContext:DbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        {
+        }
 
         // DbSets for each entity
         public DbSet<Service> Services { get; set; }
@@ -15,6 +18,8 @@ namespace CompanyPortfolioo.Domain
         public DbSet<ProjectCategory> ProjectCategories { get; set; }
         public DbSet<HorizontalSlider> HorizontalSliders { get; set; }
         public DbSet<AskedQuestion> AskedQuestions { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+
         public DbSet<Skill> Skills { get; set; }
         public DbSet<ProjectImage> ProjectImages { get; set; }
         public DbSet<Pricing> Pricings { get; set; }
@@ -26,14 +31,26 @@ namespace CompanyPortfolioo.Domain
         public DbSet<CompanyInformation> CompanyInformation { get; set; }
         public DbSet<WhyUs> WhyUs { get; set; }
         public DbSet<Features> Features { get; set; }
-      
 
 
-        
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Configure entity relationships and constraints
+            modelBuilder.Entity<IdentityUserRole<string>>
+                (entity =>
+                {
+                    entity.HasKey(e => new { e.UserId, e.RoleId });
+                });
 
+            modelBuilder.Entity<IdentityUserLogin<string>>(entity =>
+            {
+                entity.HasKey(e => new { e.LoginProvider, e.ProviderKey });
+
+            });
+            modelBuilder.Entity<IdentityUserToken<string>>(entity =>
+            { entity.HasKey(e => new { e.UserId, e.LoginProvider, e.Name }); });
 
             modelBuilder.Entity<ProjectDetails>()
                 .HasOne(pd => pd.Testimonial)
@@ -45,5 +62,5 @@ namespace CompanyPortfolioo.Domain
                 .WithMany()
                 .HasForeignKey(pd => pd.ProjectId);
         }
-}
+    }
 }
