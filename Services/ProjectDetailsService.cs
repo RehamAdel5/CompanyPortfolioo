@@ -8,7 +8,9 @@ namespace CompanyPortfolioo.Services
     {
         private readonly ApplicationDbContext _context;
         public ProjectDetailsService(ApplicationDbContext context)
-        { _context = context; }
+        {
+            _context = context; 
+        }
         public async Task<(ProjectDetails, List<ProjectImage>)> GetProjectDetailsAndImagesAsync(int id)
         {
             var projectDetails = await _context.ProjectDetails.Include(pd => pd.Project)

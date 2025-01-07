@@ -1,4 +1,5 @@
-﻿using CompanyPortfolioo.Domain;
+﻿using AutoMapper;
+using CompanyPortfolioo.Domain;
 using CompanyPortfolioo.Interfaces;
 using CompanyPortfolioo.ViewModels;
 using Microsoft.EntityFrameworkCore;
@@ -9,16 +10,18 @@ namespace CompanyPortfolioo.Services
     public class ServicesRepository : IServicesRepository
     {
         private readonly ApplicationDbContext _context;
-        public ServicesRepository(ApplicationDbContext context)
-        { _context = context; }
+        private readonly IMapper _mapper;
+
+        public ServicesRepository(ApplicationDbContext context,IMapper mapper)
+        {
+            _context = context;
+            _mapper = mapper;
+        }
         public async Task<List<ServicesViewModel>> GetServicesAsync()
         {
-            return await _context.Services.Select(s => new ServicesViewModel
-            {
-                Name = s.Name,
-                Icon = s.Icon,
-                Description = s.Description
-            }).ToListAsync();
+         var services=   await _context.Services.ToListAsync();
+            return _mapper.Map<List<ServicesViewModel>>(services);
+
         }
     }
 }

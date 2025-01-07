@@ -1,6 +1,7 @@
 using CompanyPortfolioo.Domain;
 using CompanyPortfolioo.Interfaces;
 using CompanyPortfolioo.Services;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileSystemGlobbing.Internal.Patterns;
@@ -14,9 +15,6 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-//builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-//    .AddEntityFrameworkStores<ApplicationDbContext>();
-
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
@@ -26,11 +24,6 @@ builder.Services.AddAuthorization(options => {
     policy => policy.RequireRole("Admin"));
 });
 
-
-//builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
-//builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-//    .AddEntityFrameworkStores<ApplicationDbContext>();
 
 
 
@@ -48,7 +41,7 @@ builder.Services.AddScoped<IContactUsRepository, ContactUsRepository>();
 builder.Services.AddScoped<IProjectCategoryService, ProjectCategoryService>();
 builder.Services.AddScoped<IProjectDetailsService, ProjectDetailsService>();
 
-
+builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
 

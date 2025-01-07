@@ -1,4 +1,5 @@
-﻿using CompanyPortfolioo.Domain;
+﻿using AutoMapper;
+using CompanyPortfolioo.Domain;
 using CompanyPortfolioo.Interfaces;
 using CompanyPortfolioo.ViewModels;
 using Microsoft.EntityFrameworkCore;
@@ -8,16 +9,17 @@ namespace CompanyPortfolioo.Services
     public class AskedQuestionRepository : IAskedQuestionRepository
     {
         private readonly ApplicationDbContext _context;
-        public AskedQuestionRepository(ApplicationDbContext context)
-        { _context = context; 
+        private readonly IMapper _mapper;
+
+        public AskedQuestionRepository(ApplicationDbContext context, IMapper mapper)
+        { _context = context;
+            _mapper = mapper;
         }
         public async Task<List<AskedQuestionsViewModel>> GetAskedQuestionAsync()
         {
-            return await _context.AskedQuestions.Select(s => new AskedQuestionsViewModel
-            {
-                Question = s.Question,
-                Answer = s.Answer
-            }).ToListAsync();
+          
+             var askedQuestions=   await _context.AskedQuestions.ToListAsync();
+            return _mapper.Map<List<AskedQuestionsViewModel>>(askedQuestions);
         }
     }
 }

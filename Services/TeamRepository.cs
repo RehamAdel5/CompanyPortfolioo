@@ -1,4 +1,5 @@
-﻿using CompanyPortfolioo.Domain;
+﻿using AutoMapper;
+using CompanyPortfolioo.Domain;
 using CompanyPortfolioo.Interfaces;
 using CompanyPortfolioo.ViewModels;
 using Microsoft.EntityFrameworkCore;
@@ -8,20 +9,20 @@ namespace CompanyPortfolioo.Services
     public class TeamRepository : ITeamRepository 
     {
         private readonly ApplicationDbContext _context;
-        public TeamRepository(ApplicationDbContext context)
+        private readonly IMapper _mapper;
+
+        public TeamRepository(ApplicationDbContext context,IMapper mapper)
         { 
-            _context = context; 
+            _context = context;
+            _mapper = mapper;
         } 
         public async Task<List<TeamViewModel>> GetTeamAsync()
         {
-            return await _context.Teams.Select(s => new TeamViewModel
-            { Name = s.Name,
-                Summary = s.Summary,
-                PositionTitle = s.PositionTitle, 
-                ImagePath = s.ImagePath,
-                FacebookUrl = s.FacebookUrl,
-                InstagramUrl = s.InstagramUrl,
-                LinkedInUrl = s.LinkedInUrl,
-                TwitterUrl = s.TwitterUrl
-            }).ToListAsync(); } }
+        var team= await _context.Teams.ToListAsync();
+            return _mapper.Map<List<TeamViewModel>>(team);
+
+
+
+        }
+    }
 }
