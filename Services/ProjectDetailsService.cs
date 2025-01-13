@@ -1,13 +1,14 @@
 ﻿using CompanyPortfolioo.Domain;
 using CompanyPortfolioo.Interfaces;
+using CompanyPortfolioo.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace CompanyPortfolioo.Services
 {
-    public class ProjectDetailsService : IProjectDetailsService
+    public class ProjectDetailsService :BaseRepository<ProjectDetailsViewModel> ,IProjectDetailsService
     {
         private readonly ApplicationDbContext _context;
-        public ProjectDetailsService(ApplicationDbContext context)
+        public ProjectDetailsService(ApplicationDbContext context):base(context)
         {
             _context = context; 
         }

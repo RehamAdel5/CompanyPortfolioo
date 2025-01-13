@@ -58,7 +58,8 @@ builder.Services.AddScoped<IAsyncRepository<SkillsViewModel>, BaseRepository<Ski
 builder.Services.AddScoped<IAsyncRepository<ProjectViewModel>, BaseRepository<ProjectViewModel>>();
 builder.Services.AddScoped<IAsyncRepository<TeamViewModel>, BaseRepository<TeamViewModel>>();
 builder.Services.AddScoped<IAsyncRepository<TestimonialViewModel>, BaseRepository<TestimonialViewModel>>();
-
+builder.Services.AddScoped<IAsyncRepository<ProjectCategoryViewModel>, BaseRepository<ProjectCategoryViewModel>>();
+builder.Services.AddScoped<IAsyncRepository<ProjectDetailsViewModel>, BaseRepository<ProjectDetailsViewModel>>();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 

@@ -1,5 +1,5 @@
-﻿@using CompanyPortfolioo.Domain;
-@model List< ProjectCategory>
+﻿@using CompanyPortfolioo.ViewModels;
+@model List<ProjectCategoryViewModel>
 @{
     ViewBag.Title = "Project Category";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -33,11 +33,11 @@
                         {
                             if (count == 0)
                             {
-                                <li data-filter=".@item.Id" class="filter-active">@item.Name</li>
+                                <li data-filter=".@item.Id" class="filter-active">@item.CategoryName</li>
                             }
                             else
                             {
-                                <li data-filter=".@item.Id">@item.Name</li>
+                                <li data-filter=".@item.Id">@item.CategoryName</li>
                             }
                             count++;
                         }
@@ -55,8 +55,8 @@
                             @if (counter == 0)
                             {
                                 <div class="col-lg-8 isotope-item @item.Id" data-aos="fade-up">
-                                    <img src="~/@item.ImagePath" alt="" class="img-fluid services-img">
-                                    <h3>@item.Name</h3>
+                                    <img src="~/@item.MainImagePath" alt="" class="img-fluid services-img">
+                                    <h3>@item.CategoryName</h3>
                                     <p>
                                         @item.Description
                                     </p>
@@ -65,8 +65,8 @@
                             else
                             {
                                 <div class="col-lg-8 isotope-item @item.Id" data-aos="fade-up">
-                                    <img src="~/@item.ImagePath" alt="" class="img-fluid services-img">
-                                    <h3>@item.Name</h3>
+                                    <img src="~/@item.MainImagePath" alt="" class="img-fluid services-img">
+                                    <h3>@item.CategoryName</h3>
                                     <p>
                                         @item.Description
                                     </p>

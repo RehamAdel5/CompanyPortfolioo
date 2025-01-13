@@ -1,8 +1,7 @@
-﻿namespace CompanyPortfolioo.ViewModels
+﻿namespace CompanyPortfolioo.CQRS.ProjectCategory.Queries
 {
-    public class ProjectCategoryViewModel
+    public class GetProjectCategoryListViewModel
     {
-        public int Id { get; set; }
         public string CategoryName { get; set; }
         public string Description { get; set; }
         public string ProjectName { get; set; }

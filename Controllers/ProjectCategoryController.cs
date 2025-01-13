@@ -1,31 +1,39 @@
-﻿using CompanyPortfolioo.Domain;
+﻿using CompanyPortfolioo.CQRS.AboutUs.Queries;
+using CompanyPortfolioo.CQRS.ProjectCategory.Queries;
 using CompanyPortfolioo.Interfaces;
-using CompanyPortfolioo.ViewModels;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Internal;
-using System.Collections.Frozen;
 
 namespace CompanyPortfolioo.Controllers
 {
     public class ProjectCategoryController : Controller
     {
-        private readonly IProjectCategoryService _projectCategoryService;
-        public ProjectCategoryController(IProjectCategoryService projectCategoryService)
-        { _projectCategoryService = projectCategoryService; }
+        
+        private readonly IMediator _mediator;
+
+        public ProjectCategoryController( IMediator mediator)
+        {
+            _mediator = mediator;
+        
+        
+        }
         public async Task<IActionResult> Index()
         {
-            var categoryList = await _projectCategoryService.GetProjectCategoriesAsync();
-            ViewBag.CategoryNames = categoryList.Select(p => new
-            {
-                p.Id,
-                p.Name
-            }).Distinct().ToList();
+            var categoryList = await _mediator.Send(new GetProjectCategoryQuery());
+            ViewBag.CategoryNames = categoryList.Select
+                (p => new
+                {
+                    p.Id,
+                    p.CategoryName
+                }).Distinct()
+                .ToList();
             return View(categoryList);
         }
-        public IActionResult GetProjectCategory() {
-           
-            return View(); 
-        
+        public IActionResult GetProjectCategory()
+        {
+
+            return View();
+
         }
     }
 }

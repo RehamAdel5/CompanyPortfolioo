@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CompanyPortfolioo.CQRS.ProjectDetails.Queries;
 using CompanyPortfolioo.Domain;
 using CompanyPortfolioo.ViewModels;
 
@@ -34,8 +35,27 @@ namespace CompanyPortfolioo.AutoMapper
             CreateMap<WhyUs, WhyUsViewModel>().ReverseMap();
             CreateMap<Testimonial, TestimonialViewModel>().ReverseMap();
 
+            CreateMap<ProjectCategory, ProjectCategoryViewModel>()
+                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.MainImagePath, opt => opt.MapFrom(src => src.ImagePath))
+                .ForMember(dest => dest.ProjectName, opt => opt.MapFrom(src => src.Projects.FirstOrDefault().Name))
+                .ForMember(dest => dest.ProjectBio, opt => opt.MapFrom(src => src.Projects.FirstOrDefault().Bio))
+               .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id));
+
+            {
+                CreateMap<ProjectDetails, GetProjectDetailsViewModel>()
+                    .ForMember(dest => dest.StartDate, opt => opt.MapFrom(src => src.StartDate))
+                    .ForMember(dest => dest.EndDate, opt => opt.MapFrom(src => src.EndDate))
+                    .ForMember(dest => dest.URL, opt => opt.MapFrom(src => src.URL))
+                    .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
+                    .ForMember(dest => dest.ProjectId, opt => opt.MapFrom(src => src.ProjectId))
+                    .ForMember(dest => dest.TestimonialId, opt => opt.MapFrom(src => src.TestimonialId));
+
+                CreateMap<ProjectImage, ImageViewModel>();
 
 
+
+            }
         }
     }
 }

@@ -1,8 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using CompanyPortfolioo.ViewModels;
 
-namespace CompanyPortfolioo.ViewModels
+namespace CompanyPortfolioo.CQRS.ProjectDetails.Queries
 {
-    public class ProjectDetailsViewModel
+    public class GetProjectDetailsViewModel
     {
         public int Id { get; set; }
         public string ProjectName { get; set; }
@@ -14,5 +14,7 @@ namespace CompanyPortfolioo.ViewModels
         public int ProjectId { get; set; }
         public int TestimonialId { get; set; }
         public List<ImageViewModel> ProjectImages { get; set; }
+
+       
     }
 }

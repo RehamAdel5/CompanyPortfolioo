@@ -46,6 +46,8 @@
     <Folder Include="CQRS\ContactUs\Commands\" />
     <Folder Include="CQRS\Features\Commands\" />
     <Folder Include="CQRS\HorizontalSlider\Commands\" />
+    <Folder Include="CQRS\ProjectCategory\Commands\" />
+    <Folder Include="CQRS\ProjectDetails\Commands\" />
     <Folder Include="CQRS\Project\Commands\" />
     <Folder Include="CQRS\Service\Commands\" />
     <Folder Include="CQRS\Skills\Commands\" />
