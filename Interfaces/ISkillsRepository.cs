@@ -2,7 +2,7 @@
 
 namespace CompanyPortfolioo.Interfaces
 {
-    public interface ISkillsRepository
+    public interface ISkillsRepository:IAsyncRepository<SkillsViewModel>
     {
         Task<List<SkillsViewModel>> GetSkillsAsync();
     }

@@ -2,7 +2,7 @@
 
 namespace CompanyPortfolioo.Interfaces
 {
-    public interface IContactUsRepository
+    public interface IContactUsRepository : IAsyncRepository<ContactUsViewModel>
     {
         Task<ContactUsViewModel> GetContactUsAsync();
     }

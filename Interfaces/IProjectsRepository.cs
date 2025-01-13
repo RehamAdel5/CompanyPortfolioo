@@ -2,7 +2,7 @@
 
 namespace CompanyPortfolioo.Interfaces
 {
-    public interface IProjectsRepository
+    public interface IProjectsRepository: IAsyncRepository<ProjectViewModel>
     {
         Task<List<ProjectViewModel>> GetProjectsAsync();
     }

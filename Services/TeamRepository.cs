@@ -6,12 +6,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CompanyPortfolioo.Services
 {
-    public class TeamRepository : ITeamRepository 
+    public class TeamRepository :BaseRepository<TeamViewModel> ,ITeamRepository 
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
 
-        public TeamRepository(ApplicationDbContext context,IMapper mapper)
+        public TeamRepository(ApplicationDbContext context,IMapper mapper):base(context)
         { 
             _context = context;
             _mapper = mapper;

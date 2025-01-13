@@ -2,7 +2,7 @@
 
 namespace CompanyPortfolioo.Interfaces
 {
-    public interface ITeamRepository
+    public interface ITeamRepository:IAsyncRepository<TeamViewModel>
     {
         Task<List<TeamViewModel>> GetTeamAsync();
     }

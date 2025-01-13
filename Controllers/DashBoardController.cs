@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CompanyPortfolioo.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class DashBoardController : Controller
     {
         public IActionResult Index()

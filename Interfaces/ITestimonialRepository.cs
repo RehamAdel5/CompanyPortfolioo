@@ -2,7 +2,7 @@
 
 namespace CompanyPortfolioo.Interfaces
 {
-    public interface ITestimonialRepository
+    public interface ITestimonialRepository:IAsyncRepository<TestimonialViewModel>
     {
         Task<List<TestimonialViewModel>> GetTestimonialAsync();
     }

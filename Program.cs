@@ -1,11 +1,12 @@
 using CompanyPortfolioo.Domain;
 using CompanyPortfolioo.Interfaces;
 using CompanyPortfolioo.Services;
-using Microsoft.AspNetCore.Hosting;
+using CompanyPortfolioo.ViewModels;
+using MediatR;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.FileSystemGlobbing.Internal.Patterns;
-using System.Formats.Tar;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,12 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+        .AddCookie(options =>
+        {
+            options.LoginPath = "/Account/Login";
+            options.LogoutPath = "/Account/Logout";
+        });
 
 builder.Services.AddAuthorization(options => {
     options.AddPolicy("RequireAdminRole",
@@ -40,8 +47,21 @@ builder.Services.AddScoped<IAskedQuestionRepository, AskedQuestionRepository>();
 builder.Services.AddScoped<IContactUsRepository, ContactUsRepository>();
 builder.Services.AddScoped<IProjectCategoryService, ProjectCategoryService>();
 builder.Services.AddScoped<IProjectDetailsService, ProjectDetailsService>();
+builder.Services.AddScoped<IAsyncRepository<AboutViewModel>, BaseRepository<AboutViewModel>>();
+builder.Services.AddScoped<IAsyncRepository<AskedQuestionsViewModel>, BaseRepository<AskedQuestionsViewModel>>();
+builder.Services.AddScoped<IAsyncRepository<WhyUsViewModel>, BaseRepository<WhyUsViewModel>>();
+builder.Services.AddScoped<IAsyncRepository<ContactUsViewModel>, BaseRepository<ContactUsViewModel>>();
+builder.Services.AddScoped<IAsyncRepository<PricingViewModel>, BaseRepository<PricingViewModel>>();
+builder.Services.AddScoped<IAsyncRepository<ServicesViewModel>, BaseRepository<ServicesViewModel>>();
+builder.Services.AddScoped<IAsyncRepository<HorizontalSliderViewModel>, BaseRepository<HorizontalSliderViewModel>>();
+builder.Services.AddScoped<IAsyncRepository<SkillsViewModel>, BaseRepository<SkillsViewModel>>();
+builder.Services.AddScoped<IAsyncRepository<ProjectViewModel>, BaseRepository<ProjectViewModel>>();
+builder.Services.AddScoped<IAsyncRepository<TeamViewModel>, BaseRepository<TeamViewModel>>();
+builder.Services.AddScoped<IAsyncRepository<TestimonialViewModel>, BaseRepository<TestimonialViewModel>>();
 
-builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
+
 
 var app = builder.Build();
 
@@ -66,6 +86,6 @@ app.MapRazorPages()
    .WithStaticAssets();
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=DashBoard}/{action=index}/{id?}"
+    pattern: "{controller=Home}/{action=index}/{id?}"
     );
 app.Run();

@@ -4,7 +4,7 @@ namespace CompanyPortfolioo.ViewModels
     public class IndexViewModel
     {
         public List<AboutViewModel> AboutList { get; set; }
-        //public CompanyInformationViewModel CompanyInformation { get; set; }
+    
         public List<ServicesViewModel> ServicesList { get; set; }
         public List<HorizontalSliderViewModel> HorizontalSliderList { get; set; }
         public List<SkillsViewModel> SkillsList { get; set; }

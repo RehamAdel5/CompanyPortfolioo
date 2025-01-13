@@ -15,6 +15,9 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="FluentValidation" Version="11.11.0" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="9.0.0" />
@@ -35,6 +38,20 @@
 
   <ItemGroup>
     <None Include="wwwroot\DashBoard\html\ltr\.DS_Store" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="CQRS\AboutUs\Commands\" />
+    <Folder Include="CQRS\AskedQuestion\Commands\" />
+    <Folder Include="CQRS\ContactUs\Commands\" />
+    <Folder Include="CQRS\Features\Commands\" />
+    <Folder Include="CQRS\HorizontalSlider\Commands\" />
+    <Folder Include="CQRS\Project\Commands\" />
+    <Folder Include="CQRS\Service\Commands\" />
+    <Folder Include="CQRS\Skills\Commands\" />
+    <Folder Include="CQRS\Team\Commands\" />
+    <Folder Include="CQRS\Testimonial\Commands\" />
+    <Folder Include="CQRS\WhyUs\Commands\" />
   </ItemGroup>
 
 </Project>

@@ -1,15 +1,23 @@
-﻿using CompanyPortfolioo.Domain;
+﻿using CompanyPortfolioo.CQRS.AboutUs.Queries;
+using CompanyPortfolioo.CQRS.AskedQuestion.Queries;
+using CompanyPortfolioo.CQRS.ContactUs.Queries;
+using CompanyPortfolioo.CQRS.Features.Queries;
+using CompanyPortfolioo.CQRS.HorizontalSlider.Queries;
+using CompanyPortfolioo.CQRS.Project.Queries;
+using CompanyPortfolioo.CQRS.Service.Queries;
+using CompanyPortfolioo.CQRS.Skills.Queries;
+using CompanyPortfolioo.CQRS.Team.Queries;
+using CompanyPortfolioo.CQRS.Testimonial.Queries;
+using CompanyPortfolioo.CQRS.WhyUs.Queries;
 using CompanyPortfolioo.Interfaces;
-using CompanyPortfolioo.Services;
 using CompanyPortfolioo.ViewModels;
-using Microsoft.AspNetCore.Hosting;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Build.ObjectModelRemoting;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 
 namespace HomeController.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         private readonly IServicesRepository _servicesRepository;
@@ -23,7 +31,22 @@ namespace HomeController.Controllers
         private readonly ITestimonialRepository _testimonialRepository;
         private readonly IAskedQuestionRepository _askedQuestionRepository;
         private readonly IContactUsRepository _contactUsRepository;
-        public HomeController(IServicesRepository servicesRepository, IHorizontalSliderRepository horizontalSliderRepository, IAboutRepository aboutRepository, IWhyUsRepository whyUsRepository, ISkillsRepository skillsRepository, IProjectsRepository projectsRepository, ITeamRepository teamRepository, IFeaturesRepository featuresRepository, ITestimonialRepository testimonialRepository, IAskedQuestionRepository askedQuestionRepository, IContactUsRepository contactUsRepository)
+        private readonly IMediator _mediator;
+
+        public HomeController(
+
+            IServicesRepository servicesRepository,
+            IHorizontalSliderRepository horizontalSliderRepository,
+            IAboutRepository aboutRepository,
+            IWhyUsRepository whyUsRepository,
+            ISkillsRepository skillsRepository,
+            IProjectsRepository projectsRepository,
+            ITeamRepository teamRepository,
+            IFeaturesRepository featuresRepository, 
+            ITestimonialRepository testimonialRepository,
+            IAskedQuestionRepository askedQuestionRepository, 
+            IContactUsRepository contactUsRepository,
+            IMediator mediator)
         {
             _servicesRepository = servicesRepository;
             _horizontalSliderRepository = horizontalSliderRepository;
@@ -36,22 +59,24 @@ namespace HomeController.Controllers
             _testimonialRepository = testimonialRepository;
             _askedQuestionRepository = askedQuestionRepository;
             _contactUsRepository = contactUsRepository;
+            
+            _mediator = mediator;
         }
         // Return partial views for each method
 
         public async Task<IActionResult> Index()
         {
-            var services = await _servicesRepository.GetServicesAsync();
-            var slider = await _horizontalSliderRepository.GetHorizontalSliderAsync();
-            var about = await _aboutRepository.GetAboutAsync();
-            var whyUs = await _whyUsRepository.GetWhyUsAsync();
-            var skills = await _skillsRepository.GetSkillsAsync();
-            var projects = await _projectsRepository.GetProjectsAsync();
-            var team = await _teamRepository.GetTeamAsync();
-            var featuresList = await _featuresRepository.GetFeaturesAsync();
-            var testimonial = await _testimonialRepository.GetTestimonialAsync();
-            var askedQuestion = await _askedQuestionRepository.GetAskedQuestionAsync();
-            var contactUs = await _contactUsRepository.GetContactUsAsync();
+            var services = await _mediator.Send(new GetServiceQuery());
+            var slider = await _mediator.Send(new GetHorizontalSliderQuery());
+            var about = await _mediator.Send(new GetAboutQuery());
+            var whyUs = await _mediator.Send(new GetWhyUsQuery());
+            var skills = await _mediator.Send(new GetSkillsQuery());
+            var projects = await _mediator.Send(new GetProjectsQuery());
+            var team = await _mediator.Send(new GetTeamQuery());
+            var featuresList = await _mediator.Send(new GetFeaturesQuery());
+            var testimonial = await _mediator.Send(new GetTestimonialQuery());
+            var askedQuestion = await _mediator.Send(new GetAskedQuestionQuery());
+            var contactUs = await _mediator.Send(new GetContactUsQuery());
 
             var viewModel = new IndexViewModel
             {
@@ -67,13 +92,13 @@ namespace HomeController.Controllers
                 AskedQuestionList = askedQuestion,
                 ContactUs = contactUs
             };
-             projects = await _projectsRepository.GetProjectsAsync();
+             projects = await _mediator.Send(new GetProjectsQuery());
             ViewBag.ProjectCategories = projects.Select(p => new
             {
                 p.ProjectCategoryId,
                 p.ProjectCategoryName
             }).Distinct().ToList();
-             featuresList = await _featuresRepository.GetFeaturesAsync();
+             featuresList = await _mediator.Send(new GetFeaturesQuery());
             ViewBag.PricingList = featuresList.Select(p => new
             {
                 p.PlanName,

@@ -7,12 +7,12 @@ using Microsoft.EntityFrameworkCore;
 namespace CompanyPortfolioo.Services
 {
 
-    public class ProjectsRepository : IProjectsRepository
+    public class ProjectsRepository : BaseRepository<ProjectViewModel>, IProjectsRepository
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
 
-        public ProjectsRepository(ApplicationDbContext context, IMapper mapper)
+        public ProjectsRepository(ApplicationDbContext context, IMapper mapper):base(context) 
         {
             _context = context;
             _mapper = mapper;

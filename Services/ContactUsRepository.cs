@@ -6,12 +6,12 @@ using Microsoft.EntityFrameworkCore;
 namespace CompanyPortfolioo.Services
 {
 
-    public class ContactUsRepository : IContactUsRepository
+    public class ContactUsRepository : BaseRepository<ContactUsViewModel>, IContactUsRepository
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
 
-        public ContactUsRepository(ApplicationDbContext context, IMapper mapper)
+        public ContactUsRepository(ApplicationDbContext context, IMapper mapper) : base(context)
         {
             _context = context;
             _mapper = mapper;

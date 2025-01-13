@@ -2,7 +2,7 @@
 
 namespace CompanyPortfolioo.Interfaces
 {
-    public interface IFeaturesRepository
+    public interface IFeaturesRepository:IAsyncRepository<PricingViewModel>
     {
         Task<List<PricingViewModel>> GetFeaturesAsync();
     }

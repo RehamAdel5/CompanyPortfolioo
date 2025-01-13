@@ -6,12 +6,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CompanyPortfolioo.Services
 {
-    public class SkillsRepository : ISkillsRepository
+    public class SkillsRepository : BaseRepository<SkillsViewModel>,ISkillsRepository
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
 
-        public SkillsRepository(ApplicationDbContext context,IMapper mapper)
+        public SkillsRepository(ApplicationDbContext context,IMapper mapper):base(context)
         {
             _context = context;
             _mapper = mapper;

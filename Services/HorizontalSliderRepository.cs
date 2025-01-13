@@ -6,12 +6,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CompanyPortfolioo.Services
 {
-    public class HorizontalSliderRepository : IHorizontalSliderRepository
+    public class HorizontalSliderRepository : BaseRepository<HorizontalSliderViewModel>, IHorizontalSliderRepository
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
 
-        public HorizontalSliderRepository(ApplicationDbContext context, IMapper mapper)
+        public HorizontalSliderRepository(ApplicationDbContext context, IMapper mapper):base(context)
         { _context = context;
             _mapper = mapper;
         }

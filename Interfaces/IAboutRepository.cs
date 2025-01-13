@@ -2,7 +2,7 @@
 
 namespace CompanyPortfolioo.Interfaces
 {
-    public interface IAboutRepository
+    public interface IAboutRepository : IAsyncRepository<AboutViewModel>
     {
         Task<List<AboutViewModel>> GetAboutAsync();
     }

@@ -5,6 +5,7 @@ using CompanyPortfolioo.ViewModels;
 
 namespace CompanyPortfolioo.Controllers
 {
+    //[Route("Account")]
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -14,9 +15,15 @@ namespace CompanyPortfolioo.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
         }
-        [HttpGet]
-        public IActionResult Register() => View();
-        [HttpPost]
+
+        [HttpGet("Register")]
+        public IActionResult Register()
+        {
+            return View(new RegisterViewModel());
+        }
+
+        [HttpPost("Register")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
@@ -30,7 +37,7 @@ namespace CompanyPortfolioo.Controllers
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "DashBoard");
                 }
                 foreach (var error in result.Errors)
                 {
@@ -39,9 +46,12 @@ namespace CompanyPortfolioo.Controllers
             }
             return View(model);
         }
+
         [HttpGet]
         public IActionResult Login() => View();
+        
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
@@ -52,13 +62,15 @@ namespace CompanyPortfolioo.Controllers
                     lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "DashBoard");
                 }
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             }
             return View(model);
         }
-        [HttpPost]
+
+        [HttpPost("Logout")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();

@@ -2,7 +2,7 @@
 
 namespace CompanyPortfolioo.Interfaces
 {
-    public interface IWhyUsRepository
+    public interface IWhyUsRepository:IAsyncRepository<WhyUsViewModel>
     {
         Task<List<WhyUsViewModel>> GetWhyUsAsync();
     }

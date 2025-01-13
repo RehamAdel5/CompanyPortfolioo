@@ -2,7 +2,7 @@
 
 namespace CompanyPortfolioo.Interfaces
 {
-    public interface IServicesRepository
+    public interface IServicesRepository: IAsyncRepository<ServicesViewModel>
     {
         Task<List<ServicesViewModel>> GetServicesAsync();
     }
